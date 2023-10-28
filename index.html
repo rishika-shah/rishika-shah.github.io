@@ -1,26 +1,60 @@
 <!DOCTYPE html>
 <html>
-<head>
-<style>
-body {
-  background-color: lightblue;
-}
+  <head>
+    <title>Data Driven Poetry</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1 class="title">Nowhere Near</h1>
+    </header>
+    <main class="wrapper">
+      <div class="left-column">
+        <div class="left-column-content">
+          <div class = "filler-verse"></div>
+          <ul class="verse" id="verse1">
+            <li class="line" id="line1">My mother always said to me,</li>
+            <li class="line" id="line2">"Always dare to dream, be free"</li>
+            <li class="line" id="line3">But that was only after she reminded me,</li>
+            <li class="line" id="line4">“Watch what you wear, don’t expose anything above your knee.”</li>
+            <li class="line" id="line5">I was still a baby.</li>
+          </ul>
 
-h1 {
-  color: white;
-  text-align: center;
-}
+          <ul class="verse" id="verse2">
+            <li class="line" id="line1">As a young girl, I was told,</li>
+            <li class="line" id="line2">"Be who you want, be bold"</li>
+            <li class="line" id="line3">But one condition would always hold,</li>
+            <li class="line" id="line4">“Don't stay out after the sun is gone cold.”</li>
+            <li class="line" id="line5">I was just eight years old.</li>
+          </ul>
 
-p {
-  font-family: verdana;
-  font-size: 20px;
-}
-</style>
-</head>
-<body>
+          <ul class="verse" id="verse3">
+            <li class="line" id="line1">The alerts, the warnings, the never-ending caution,</li>
+            <li class="line" id="line2">The rules, the deadlines, all that prohibition,</li>
+            <li class="line" id="line3">Were always part of the discussion.</li>
+            <li class="line" id="line4">And I know I am not an exception.</li>
+            <li class="line" id="line5">The question is not <em>if</em>, but <em>when</em> we will all be in that situation?</li>
+          </ul>
 
-<h1>Hey! This is a hosted website!</h1>
-<p>Are you excited????</p>
-
-</body>
+          <ul class="verse" id="verse4">
+            <li class="line" id="line1">The numbers are clear:</li>
+            <li class="line" id="line2">To be a woman is to live in fear.</li>
+            <li class="line" id="line3">When will things change; when will all this disappear?</li>
+            <li class="line" id="line4">We wait for it to get better, year after year.</li>
+            <li class="line" id="line5">But progress seems nowhere near.</li>
+          </ul>
+          <div class = "filler-verse"></div>
+        </div>
+      </div>
+      <div class="right-column">
+        <svg id="svg"></svg>
+      </div>
+    </main>
+    <footer>
+      <!-- <button class="arrow-button" id="backward-button">◄</button>
+      <button class="arrow-button" id="forward-button">►</button> -->
+    </footer>
+    <script src="main.js"></script>
+  </body>
 </html>
