@@ -3,51 +3,41 @@ let svg = d3.select("#svg");
 let keyframeIndex = 0;
 const width = 650;
 const height = 550;
+
+// load data
 async function loadData(){
     await d3.csv("yearwise_data.csv").then(data => {
         crimeData = data;
     });
-    // await d3.csv("../data/crime_data.csv").then(data => {
-    //     data.forEach(d => {
-    //         d.State = 
-    //         d.Year = parseInt(d.Year);
-    //         d.Rape = parseInt(d.Rape);
-    //     });
-    // });
 }
-
-function drawRoseColours() {
-    return
-}
-
 
 
 function drawLineChart(data, title) {
-    // svg.selectAll("*").remove();
+
     svg.attr("width", width);
     svg.attr("height", height);
 
-    // Define the margin so that there is space around the vis for axes and labels
+    // Margin
     const margin = { top: 120, right: 30, bottom: 50, left: 90 };
     let chartWidth = width - margin.left - margin.right;
     let chartHeight = height - margin.top - margin.bottom;
 
-    // Create a 'group' variable to hold the chart, these are used to keep similar items together in d3/with svgs
+    // 'group' variable for all elements of the SVG
     let chart = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Define an x scale which will assign a spot on the x axis to each of the unique values of colour in the dataset
+    // X scale for all years
     let xScale = d3.scaleLinear()
         .domain([d3.min(data, d => d.Year), d3.max(data, d => d.Year)])
         .range([0, chartWidth]);
 
+    // Y scale for number of crimes
     let yScale = d3.scaleLinear()
-        .domain([0, 300000])
+        .domain([0, 1.2 * d3.max(data, d => parseInt(d["Cruelty by Husband or his Relatives"]))])
         .nice()
         .range([chartHeight, 0]);
 
-    // console.log(d3.max(data, d => d["Cruelty by Husband or his Relatives"]));
-
+    // line 1: Rape
     const line1 = d3.line()
         .x(d => xScale(d.Year))
         .y(d => yScale(d.Rape));
@@ -61,6 +51,7 @@ function drawLineChart(data, title) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .attr("stroke-width", 1.5);
 
+    // line 2: Dowry Deaths
     const line2 = d3.line()
         .x(d => xScale(d.Year))
         .y(d => yScale(d["Dowry Deaths"]));
@@ -74,6 +65,7 @@ function drawLineChart(data, title) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .attr("stroke-width", 1.5);
 
+    // line 3: Cruelty by Husband or his Relatives
     const line3 = d3.line()
         .x(d => xScale(d.Year))
         .y(d => yScale(d["Cruelty by Husband or his Relatives"]));
@@ -87,6 +79,7 @@ function drawLineChart(data, title) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .attr("stroke-width", 1.5);
 
+    // line 4: Kidnapping and Abduction
     const line4 = d3.line()
         .x(d => xScale(d.Year))
         .y(d => yScale(d["Kidnapping and Abduction"]));
@@ -100,6 +93,7 @@ function drawLineChart(data, title) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .attr("stroke-width", 1.5);
 
+    // line 5: Assault on women with intent to outrage her modesty
     const line5 = d3.line()
         .x(d => xScale(d.Year))
         .y(d => yScale(d["Assault on women with intent to outrage her modesty"]));
@@ -113,6 +107,7 @@ function drawLineChart(data, title) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .attr("stroke-width", 1.5);
 
+    // line 6: Insult to modesty of Women
     const line6 = d3.line()
         .x(d => xScale(d.Year))
         .y(d => yScale(d["Insult to modesty of Women"]));
@@ -125,31 +120,6 @@ function drawLineChart(data, title) {
         .attr("stroke", "#a121fc")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .attr("stroke-width", 1.5);
-
-    // const line7 = d3.line()
-    //     .x(d => xScale(d.Year))
-    //     .y(d => yScale(d["Importation of Girls"]));
-
-    // svg.append("path")
-    //     .datum(data)
-    //     .attr("class", "line")
-    //     .attr("d", line7)
-    //     .attr("fill", "none")
-    //     .attr("stroke", "purple")
-    //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    //     .attr("stroke-width", 1.5);
-
-        // Cruelty by Husband or his Relatives
-    // Create bars
-    // chart.selectAll(".bar")
-    //     .data(data)
-    //     .enter().append("rect")
-    //     .attr("class", "bar")
-    //     .attr("x", d => xScale(d.colour)) // This arrow function notation is a more concise way of calling a function on each bar
-    //     .attr("y", d => yScale(d.count))
-    //     .attr("width", xScale.bandwidth())
-    //     .attr("height", d => chartHeight - yScale(d.count))
-    //     .attr("fill", "#999"); // Set the bars to be a light grey colour
 
 
     // Add x-axis
@@ -178,6 +148,7 @@ function drawLineChart(data, title) {
         .style("font-weight", 100)
         .text(title);
 
+    // Add label to X axis
     svg.append("text")
         .attr("class", "x-label")
         .attr("text-anchor", "middle")
@@ -189,6 +160,7 @@ function drawLineChart(data, title) {
         .style("font-weight", 100)
         .text("Year");
 
+    // Add label to Y-axis
     svg.append("text")
         .attr("class", "y-label")
         .attr("text-anchor", "middle")
@@ -201,6 +173,7 @@ function drawLineChart(data, title) {
         .style("font-weight", 100)
         .text("Number of Crimes");
 
+    // Create legend
     const legendData = [
         { name: "Rape", color: "#f52f2f" }, // Custom legend label and color for Series A
         { name: "Cruelty by Husband or his Relatives", color: "#57d1f2" }, // Custom legend label and color for Series B
@@ -224,7 +197,7 @@ function drawLineChart(data, title) {
     legendItems.append("rect")
         .attr("width", 15)
         .attr("height", 2)
-        .attr("fill", d => d.color); // Use the same color scale as your lines
+        .attr("fill", d => d.color); 
 
     legendItems.append("text")
         .attr("x", 25)
@@ -234,36 +207,23 @@ function drawLineChart(data, title) {
         .style("fill", "lightgrey")
         .style("font-family", "Gill Sans")
         .style("font-size", "10px")
-        .style("font-weight", 100); // Use the name property of your data for the legend labels
+        .style("font-weight", 100); 
     
 }
 
-// TODO Write a new function updateBarchart so that it updates the existing svg rather than rewriting it
-// TODO Update the xScale domain to match new order
-// TODO Update the yScale domain for new values
-
-// TODO select all the existing bars
-// TODO remove any bars no longer in the dataset
-// TODO move any bars that already existed to their correct spot
-// TODO Add any new bars
-
-// TODO update the x and y axis
-
-// TODO update the title
-
-// TODO add some animation to this
-
 function initialiseSVG() {
+
     svg.attr("width", width);
     svg.attr("height", height);
 
     svg.selectAll("*").remove();
 
+    // margin
     const margin = { top: 120, right: 30, bottom: 50, left: 90 };
     chartWidth = width - margin.left - margin.right;
     chartHeight = height - margin.top - margin.bottom;
 
-    chart = svg.append("g") // g = group element
+    chart = svg.append("g") 
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     xScale = d3.scaleLinear()
@@ -302,17 +262,13 @@ function initialiseSVG() {
 }
 
 async function initialise() {
-    // TODO draw the first keyframe
 
-    // TODO load the data
     await loadData();
     console.log(crimeData);
 
-    // TODO initalise the SVG
     initialiseSVG();
     drawLineChart(crimeData, "Crimes Against Women in India");
 
-    // TODO make the word red clickable
 }
 
 
