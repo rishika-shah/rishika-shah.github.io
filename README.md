@@ -6,5 +6,5 @@ To run this locally, download the following files and save into the same directo
 - index.html
 - styles.css
 - main.js
-- yearwise_crimes.csv
-
+- yearwise_data.csv
+- statewise_data.csv
